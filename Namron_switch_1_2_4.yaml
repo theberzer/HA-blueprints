@@ -210,7 +210,7 @@ action:
         sequence: !input channel_one_off_short
 
       - conditions:
-          - "{{ command == 'move_with_on_off' }}"
+          - "{{ command == 'move' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ move_mode == 'MoveMode.Down' }}"
