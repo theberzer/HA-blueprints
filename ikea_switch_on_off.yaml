@@ -63,7 +63,7 @@ trigger:
 
 action:
   - variables:
-      command: "{{ trigger.event.data.command }}"on_short
+      command: "{{ trigger.event.data.command }}"
       cluster_id: "{{ trigger.event.data.cluster_id }}"
       endpoint_id: "{{ trigger.event.data.endpoint_id }}"
       args: "{{ trigger.event.data.args }}"
