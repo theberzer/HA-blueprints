@@ -12,6 +12,7 @@ blueprint:
         device:
           integration: zha
           manufacturer: IKEA of Sweden
+          model: 'TRADFRI on/off switch'
 
           
     on_short:
