@@ -1,0 +1,119 @@
+blueprint:
+  name: ZHA - IKEA On-Off
+  description: |
+    Controll lights and other with Namron zigbee remote
+
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Namron controller
+      selector:
+        device:
+          integration: zha
+          manufacturer: IKEA of Sweden
+
+          
+    on_short:
+      name: on button - short press
+      description: Action to run on short press on one on button 
+      default: []
+      selector:
+        action:
+    on_long:
+      name: on button - long press
+      description: Action to run on long press on one on button 
+      default: []
+      selector:
+        action:    
+    on_long_stop:
+      name: on button - long press release
+      description: Action to run on long press release on one on button 
+      default: []
+      selector:
+        action:           
+    off_short:
+      name: off button - short press
+      description: Action to run on short press on One off button 
+      default: []
+      selector:
+        action:
+    off_long:
+      name: off button - long press
+      description: Action to run on long press on One off button 
+      default: []
+      selector:
+        action:
+    off_long_stop:
+      name: off button - long press release
+      description: Action to run on long press release on One off button 
+      default: []
+      selector:
+        action:
+        
+mode: restart
+max_exceeded: silent
+
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input remote
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"on_short
+      cluster_id: "{{ trigger.event.data.cluster_id }}"
+      endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+      args: "{{ trigger.event.data.args }}"
+      move_mode: "{{ trigger.event.data.params.move_mode }}"
+  - choose:
+
+#--------------------ON SHORT----------------------------------------
+      - conditions:
+          - "{{ command == 'on' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input on_short
+
+#--------------------ON LONG----------------------------------------
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.Up' }}"
+        sequence: !input on_long
+
+#--------------------ON LONG RELEASE----------------------------------------        
+      - conditions:
+          - "{{ command == 'stop_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input on_long_stop
+
+#--------------------OFF SHORT---------------------------------------- 
+      - conditions:
+          - "{{ command == 'off' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input off_short
+
+#--------------------OFF LONG---------------------------------------- 
+      - conditions:
+          - "{{ command == 'move' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.Down' }}"
+        sequence: !input off_long
+
+#--------------------OFF LONG RELEASE----------------------------------------         
+      - conditions:
+          - "{{ command == 'stop_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input off_long_stop
