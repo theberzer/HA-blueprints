@@ -70,6 +70,7 @@ action:
       move_mode: "{{ trigger.event.data.params.move_mode }}"
   - choose:
 
+
 #--------------------ON SHORT----------------------------------------
       - conditions:
           - "{{ command == 'on' }}"
