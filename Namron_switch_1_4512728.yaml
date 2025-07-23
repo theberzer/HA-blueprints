@@ -28,19 +28,19 @@ blueprint:
         action:
 #--------------------Brightness-----------------------------------        
     brightness_increase:
-      name: Channel two - brightness increase - long press
+      name: Brightness increase - long press
       description: Action to run on brightness increase 
       default: []
       selector:
         action:             
     brightness_decrease:
-      name: Channel two - brightness decrease - long press
+      name: Brightness decrease - long press
       description: Action to run on brightness decrease  
       default: []
       selector:
         action:
     brightness_stop:
-      name: Channel two - brightness - long press release
+      name: Brightness - long press release
       description: Action to run on long press release on brightness button 
       default: []
       selector:
