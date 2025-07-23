@@ -91,7 +91,7 @@ action:
           - "{{ command == 'move_with_on_off' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
-          - "{{ move_mode == 'MoveMode.down' }}"
+          - "{{ move_mode == 'MoveMode.Down' }}"
         sequence: !input brightness_decrease        
     
       - conditions:
