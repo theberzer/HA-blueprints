@@ -1,5 +1,5 @@
 blueprint:
-  name: ZHA - Namron 2 channel switch
+  name: ZHA - Namron singel channel switch with brightness control
   description: |
     Controll lights with Namron zigbee 4512728 remote
 
