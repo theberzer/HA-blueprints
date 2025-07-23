@@ -1,0 +1,102 @@
+blueprint:
+  name: ZHA - Namron 2 channel switch
+  description: |
+    Controll lights with Namron zigbee 4512728 remote
+
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Namron controller
+      selector:
+        device:
+          integration: zha
+          manufacturer: NAMRON AS
+
+#--------------------On/Off-----------------------------------          
+    on_short:
+      name: Channel one - on button - press
+      description: Action to run on press on one on button 
+      default: []
+      selector:
+        action:
+    off_short:
+      name: Channel one - off button -  press
+      description: Action to run on press on One off button 
+      default: []
+      selector:
+        action:
+#--------------------Brightness-----------------------------------        
+    brightness_increase:
+      name: Channel two - brightness increase - long press
+      description: Action to run on brightness increase 
+      default: []
+      selector:
+        action:             
+    brightness_decrease:
+      name: Channel two - brightness decrease - long press
+      description: Action to run on brightness decrease  
+      default: []
+      selector:
+        action:
+    brightness_stop:
+      name: Channel two - brightness - long press release
+      description: Action to run on long press release on brightness button 
+      default: []
+      selector:
+        action:  
+        
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input remote
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"
+      cluster_id: "{{ trigger.event.data.cluster_id }}"
+      endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+      args: "{{ trigger.event.data.args }}"
+      move_mode: "{{ trigger.event.data.params.move_mode }}"
+  - choose:
+
+#--------------------On/Off-----------------------------------      
+      - conditions:
+          - "{{ command == 'on' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input on_short
+
+      - conditions:
+          - "{{ command == 'off' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input off_short
+
+#--------------------Brightness-----------------------------------      
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.Up' }}"
+        sequence: !input brightness_increase
+
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.down' }}"
+        sequence: !input brightness_decrease        
+    
+      - conditions:
+          - "{{ command == 'stop_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1}}"
+          - "{{ args == [] }}"
+        sequence: !input brightness_stop
