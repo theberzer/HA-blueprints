@@ -82,21 +82,21 @@ action:
 #--------------------Brightness-----------------------------------      
       - conditions:
           - "{{ command == 'move_with_on_off' }}"
-          - "{{ cluster_id == 32 }}"
+          - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ move_mode == 'MoveMode.Up' }}"
         sequence: !input brightness_increase
 
       - conditions:
           - "{{ command == 'move_with_on_off' }}"
-          - "{{ cluster_id == 32 }}"
+          - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ move_mode == 'MoveMode.down' }}"
         sequence: !input brightness_decrease        
     
       - conditions:
           - "{{ command == 'stop_with_on_off' }}"
-          - "{{ cluster_id == 32 }}"
+          - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1}}"
           - "{{ args == [] }}"
         sequence: !input brightness_stop
