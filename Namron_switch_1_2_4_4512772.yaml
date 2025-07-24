@@ -183,7 +183,7 @@ action:
 
 #----------------------Channel One---------------------------------       
       - conditions:
-          - "{{ command == 'on' }}"
+          - "{{ command in ['move', 'move_with_on_off'] }}"
           - "{{ cluster_id == 6 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
@@ -197,7 +197,7 @@ action:
         sequence: !input channel_one_on_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
@@ -218,7 +218,7 @@ action:
         sequence: !input channel_one_off_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
@@ -226,7 +226,7 @@ action:
 
 #----------------------Channel Two---------------------------------           
       - conditions:
-          - "{{ command == 'on' }}"
+          - "{{ command in ['move', 'move_with_on_off'] }}"
           - "{{ cluster_id == 6 }}"
           - "{{ endpoint_id == 2 }}"
           - "{{ args == [] }}"
@@ -240,7 +240,7 @@ action:
         sequence: !input channel_two_on_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 2 }}"
           - "{{ args == [] }}"
@@ -261,7 +261,7 @@ action:
         sequence: !input channel_two_off_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 2 }}"
           - "{{ args == [] }}"
@@ -269,7 +269,7 @@ action:
 
 #----------------------Channel Three---------------------------------          
       - conditions:
-          - "{{ command == 'on' }}"
+          - "{{ command in ['move', 'move_with_on_off'] }}"
           - "{{ cluster_id == 6 }}"
           - "{{ endpoint_id == 3 }}"
           - "{{ args == [] }}"
@@ -283,7 +283,7 @@ action:
         sequence: !input channel_three_on_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 3 }}"
           - "{{ args == [] }}"
@@ -297,14 +297,14 @@ action:
         sequence: !input channel_three_off_short
 
       - conditions:
-          - "{{ command == 'move' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 3 }}"
           - "{{ move_mode == 'MoveMode.Down' }}"
         sequence: !input channel_three_off_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 3 }}"
           - "{{ args == [] }}"
@@ -312,7 +312,7 @@ action:
 
 #----------------------Channel Four---------------------------------     
       - conditions:
-          - "{{ command == 'on' }}"
+          - "{{ command in ['move', 'move_with_on_off'] }}"
           - "{{ cluster_id == 6 }}"
           - "{{ endpoint_id == 4 }}"
           - "{{ args == [] }}"
@@ -326,7 +326,7 @@ action:
         sequence: !input channel_four_on_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 4 }}"
           - "{{ args == [] }}"
@@ -340,14 +340,14 @@ action:
         sequence: !input channel_four_off_short
 
       - conditions:
-          - "{{ command == 'move' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 4 }}"
           - "{{ move_mode == 'MoveMode.Down' }}"
         sequence: !input channel_four_off_long
         
       - conditions:
-          - "{{ command == 'stop' }}"
+          - "{{ command in ['stop', 'stop_with_on_off'] }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 4 }}"
           - "{{ args == [] }}"
