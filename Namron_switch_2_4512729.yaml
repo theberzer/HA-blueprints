@@ -1,0 +1,193 @@
+blueprint:
+  name: ZHA - Namron 2 channel switch 
+  description: |
+    Controll lights and other with Namron zigbee 4512729 remote
+
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Namron controller
+      selector:
+        device:
+          integration: zha
+          manufacturer: NAMRON AS
+
+#----------------------Channel One---------------------------------              
+    channel_one_on_short:
+      name: Channel one - on button - short press
+      description: Action to run on short press on one on button 
+      default: []
+      selector:
+        action:
+    channel_one_on_long:
+      name: Channel one - on button - long press
+      description: Action to run on long press on one on button 
+      default: []
+      selector:
+        action:    
+    channel_one_on_stop:
+      name: Channel one - on button - long press release
+      description: Action to run on long press release on one on button 
+      default: []
+      selector:
+        action:           
+    channel_one_off_short:
+      name: Channel one - off button - short press
+      description: Action to run on short press on One off button 
+      default: []
+      selector:
+        action:
+    channel_one_off_long:
+      name: Channel one - off button - long press
+      description: Action to run on long press on One off button 
+      default: []
+      selector:
+        action:
+    channel_one_off_stop:
+      name: Channel one - off button - long press release
+      description: Action to run on long press release on One off button 
+      default: []
+      selector:
+        action:
+#----------------------Channel Two---------------------------------                 
+    channel_two_on_short:
+      name: Channel two - on button - short press
+      description: Action to run on short press on Two on button 
+      default: []
+      selector:
+        action:
+    channel_two_on_long:
+      name: Channel two - on button - long press
+      description: Action to run on long press on Two ont button 
+      default: []
+      selector:
+        action:    
+    channel_two_on_stop:
+      name: Channel two - on button - long press release
+      description: Action to run on long press release on Two on button 
+      default: []
+      selector:
+        action:           
+    channel_two_off_short:
+      name: Channel two - off button - short press
+      description: Action to run on short press on Two off button 
+      default: []
+      selector:
+        action:
+    channel_two_off_long:
+      name: Channel two - off button - long press
+      description: Action to run on long press on Two off button 
+      default: []
+      selector:
+        action:
+    channel_two_off_stop:
+      name: Channel two - off button - long press release
+      description: Action to run on long press release on Two off button 
+      default: []
+      selector:
+        action:  
+        
+mode: restart
+max_exceeded: silent
+
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input remote
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"
+      cluster_id: "{{ trigger.event.data.cluster_id }}"
+      endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+      args: "{{ trigger.event.data.args }}"
+      move_mode: "{{ trigger.event.data.params.move_mode }}"
+  - choose:
+#----------------------Channel One---------------------------------     
+      - conditions:
+          - "{{ command == 'on' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_on_short
+
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.Up' }}"
+        sequence: !input channel_one_on_long
+        
+      - conditions:
+          - "{{ command == 'stop_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_on_stop
+
+      - conditions:
+          - "{{ command == 'off' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_off_short
+
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ move_mode == 'MoveMode.Down' }}"
+        sequence: !input channel_one_off_long
+        
+      - conditions:
+          - "{{ command == 'stop' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_off_stop
+#----------------------Channel Two---------------------------------          
+      - conditions:
+          - "{{ command == 'on' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_two_on_short
+
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ move_mode == 'MoveMode.Up' }}"
+        sequence: !input channel_two_on_long
+        
+      - conditions:
+          - "{{ command == 'stop_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_two_on_stop
+
+      - conditions:
+          - "{{ command == 'off' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_two_off_short
+
+      - conditions:
+          - "{{ command == 'move_with_on_off' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ move_mode == 'MoveMode.Down' }}"
+        sequence: !input channel_two_off_long
+        
+      - conditions:
+          - "{{ command == 'stop' }}"
+          - "{{ cluster_id == 8 }}"
+          - "{{ endpoint_id == 2 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_two_off_stop
+#-------------------------------------------------------    
