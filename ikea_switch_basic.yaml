@@ -1,7 +1,7 @@
 blueprint:
   name: ZHA - IKEA On-Off
   description: |
-    Controll lights and other with Namron zigbee remote
+    Controll lights and other with IKEA On-Off switch
 
   domain: automation
   input:
