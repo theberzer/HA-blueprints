@@ -129,6 +129,7 @@ action:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
+          - "{{ args == [0, 43, 5] }}"
         sequence: !input up_short
 
 #--------------------UP LONG----------------------------------------
