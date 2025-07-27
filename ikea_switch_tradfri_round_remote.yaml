@@ -199,18 +199,18 @@ action:
           - "{{ cluster_id == 5 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [257, 13, 0] }}"
-        sequence: !input off_long_stop
+        sequence: !input left_short
 #--------------------LEFT LONG----------------------------------------         
       - conditions:
           - "{{ command == 'hold' }}"
           - "{{ cluster_id == 5 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [3329, 0] }}"
-        sequence: !input off_long_stop
+        sequence: !input left_long
 #--------------------LEFT LONG RELEASE----------------------------------------         
       - conditions:
           - "{{ command == 'release' }}"
           - "{{ cluster_id == 5 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
-        sequence: !input off_long_stop
+        sequence: !input left_long_stop
