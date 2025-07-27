@@ -62,38 +62,38 @@ blueprint:
 #--------------------RIGHT---------------------------------------- 
     right_short:
       name: right button - short press
-      description: Action to run on short press on One off button 
+      description: Action to run on short press on right button 
       default: []
       selector:
         action:
     right_long:
       name: right button - long press
-      description: Action to run on long press on One off button 
+      description: Action to run on long press on right button 
       default: []
       selector:
         action:
     right_long_stop:
       name: right button - long press release
-      description: Action to run on long press release on One off button 
+      description: Action to run on long press release on right button 
       default: []
       selector:
         action:
 #--------------------LEFT---------------------------------------- 
     left_short:
       name: left button - short press
-      description: Action to run on short press on One off button 
+      description: Action to run on short press on left button 
       default: []
       selector:
         action:
     left_long:
       name: left button - long press
-      description: Action to run on long press on One off button 
+      description: Action to run on long press on left button 
       default: []
       selector:
         action:
     left_long_stop:
       name: left button - long press release
-      description: Action to run on long press release on One off button 
+      description: Action to run on long press release on left button 
       default: []
       selector:
         action:
@@ -152,10 +152,9 @@ action:
           - "{{ command == 'step' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
-          - "{{ args == [] }}"
         sequence: !input down_short
 
-#--------------------OFF LONG---------------------------------------- 
+#--------------------DOWN LONG---------------------------------------- 
       - conditions:
           - "{{ command == 'move' }}"
           - "{{ cluster_id == 8 }}"
@@ -163,7 +162,7 @@ action:
           - "{{ move_mode == 'MoveMode.Down' }}"
         sequence: !input down_long
 
-#--------------------OFF LONG RELEASE----------------------------------------         
+#--------------------DOWN LONG RELEASE----------------------------------------         
       - conditions:
           - "{{ command == 'stop' }}"
           - "{{ cluster_id == 8 }}"
