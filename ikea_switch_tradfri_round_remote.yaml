@@ -14,41 +14,48 @@ blueprint:
           manufacturer: IKEA of Sweden
           model: 'TRADFRI remote control'
 
-#--------------------ON----------------------------------------         
-    on_short:
-      name: on button - short press
-      description: Action to run on short press on one on button 
+#--------------------TOGGLE----------------------------------------         
+    toggle_short:
+      name: toggle button
+      description: Action to run on toggle button 
       default: []
       selector:
         action:
-    on_long:
-      name: on button - long press
-      description: Action to run on long press on one on button 
+#--------------------UP----------------------------------------         
+    up_short:
+      name: up button - short press
+      description: Action to run on short press on up button 
+      default: []
+      selector:
+        action:
+    up_long:
+      name: up button - long press
+      description: Action to run on long press on up button 
       default: []
       selector:
         action:    
-    on_long_stop:
-      name: on button - long press release
-      description: Action to run on long press release on one on button 
+    up_long_stop:
+      name: up button - long press release
+      description: Action to run on long press release on up button 
       default: []
       selector:
         action:   
-#--------------------OFF----------------------------------------         
-    off_short:
-      name: off button - short press
-      description: Action to run on short press on One off button 
+#--------------------DOWN----------------------------------------         
+    down_short:
+      name: down button - short press
+      description: Action to run on short press on down button 
       default: []
       selector:
         action:
-    off_long:
-      name: off button - long press
-      description: Action to run on long press on One off button 
+    down_long:
+      name: down button - long press
+      description: Action to run on long press on down button 
       default: []
       selector:
         action:
-    off_long_stop:
-      name: off button - long press release
-      description: Action to run on long press release on One off button 
+    down_long_stop:
+      name: down button - long press release
+      description: Action to run on long press release on down button 
       default: []
       selector:
         action:
@@ -110,38 +117,44 @@ action:
       move_mode: "{{ trigger.event.data.params.move_mode }}"
   - choose:
 
-
-#--------------------ON SHORT----------------------------------------
+#--------------------TOGGLE----------------------------------------
+      - conditions:
+          - "{{ command == 'toggle' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input toggle_short
+#--------------------UP SHORT----------------------------------------
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
-        sequence: !input on_short
+        sequence: !input up_short
 
-#--------------------ON LONG----------------------------------------
+#--------------------UP LONG----------------------------------------
       - conditions:
           - "{{ command == 'move_with_on_off' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ move_mode == 'MoveMode.Up' }}"
-        sequence: !input on_long
+        sequence: !input up_long
 
-#--------------------ON LONG RELEASE----------------------------------------        
+#--------------------UP LONG RELEASE----------------------------------------        
       - conditions:
           - "{{ command == 'stop_with_on_off' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
-        sequence: !input on_long_stop
+        sequence: !input up_long_stop
 
-#--------------------OFF SHORT---------------------------------------- 
+#--------------------DOWN SHORT---------------------------------------- 
       - conditions:
           - "{{ command == 'step' }}"
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
-        sequence: !input off_short
+        sequence: !input down_short
 
 #--------------------OFF LONG---------------------------------------- 
       - conditions:
@@ -149,7 +162,7 @@ action:
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ move_mode == 'MoveMode.Down' }}"
-        sequence: !input off_long
+        sequence: !input down_long
 
 #--------------------OFF LONG RELEASE----------------------------------------         
       - conditions:
@@ -157,7 +170,7 @@ action:
           - "{{ cluster_id == 8 }}"
           - "{{ endpoint_id == 1 }}"
           - "{{ args == [] }}"
-        sequence: !input off_long_stop
+        sequence: !input down_long_stop
 
 #--------------------RIGHT SHORT----------------------------------------         
       - conditions:
