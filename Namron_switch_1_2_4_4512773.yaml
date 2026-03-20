@@ -1,0 +1,69 @@
+blueprint:
+  name: ZHA - Namron 1 channel switch on-off
+  description: |
+    Controll lights and other with Namron zigbee 4512773 remote
+
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Namron controller
+      selector:
+        device:
+          integration: zha
+          manufacturer: NAMRON AS
+
+#----------------------Channel One---------------------------------               
+    channel_one_on_short:
+      name: Channel one - on button - short press
+      description: Action to run on short press on one on button 
+      default: []
+      selector:
+        action:
+    
+      name: Channel one - on button - long press release
+      description: Action to run on long press release on one on button 
+      default: []
+      selector:
+        action:           
+    channel_one_off_short:
+      name: Channel one - off button - short press
+      description: Action to run on short press on One off button 
+      default: []
+      selector:
+        action:
+mode: restart
+max_exceeded: silent
+
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input remote
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"
+      cluster_id: "{{ trigger.event.data.cluster_id }}"
+      endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+  - choose:
+
+#----------------------Channel One---------------------------------       
+      - conditions:
+          - "{{ command == 'on'}}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_on_short
+
+
+      - conditions:
+          - "{{ command == 'off' }}"
+          - "{{ cluster_id == 6 }}"
+          - "{{ endpoint_id == 1 }}"
+          - "{{ args == [] }}"
+        sequence: !input channel_one_off_short
+#
+#-------------------------------------------------------        
+    
