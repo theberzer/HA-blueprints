@@ -20,12 +20,7 @@ blueprint:
       default: []
       selector:
         action:
-    
-      name: Channel one - on button - long press release
-      description: Action to run on long press release on one on button 
-      default: []
-      selector:
-        action:           
+           
     channel_one_off_short:
       name: Channel one - off button - short press
       description: Action to run on short press on One off button 
