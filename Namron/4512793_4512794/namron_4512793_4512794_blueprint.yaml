@@ -1,15 +1,47 @@
 blueprint:
   name: ZHA - Namron 4512793 / 4512794 Multi-Channel Wall Switch
   description: >
-    Event-based blueprint for the Namron 4512793 / 4512794 wall switch using
-    a custom ZHA quirk that emits zha_event commands such as
-    button_1_on_short_press, button_2_off_long_hold, etc.
+    Blueprint for the Namron 4512793 / 4512794 Zigbee wall switch used with ZHA
+    and a custom quirk that emits zha_event commands.
 
-    Supports 1-, 2-, and 3-channel modes through the same event model.
+    Supported modes:
+    - 1-channel
+    - 2-channel
+    - 3-channel
+
+    Supported actions per button:
+    - ON short press
+    - OFF short press
+    - ON long hold
+    - ON long release
+    - OFF long hold
+    - OFF long release
+
+    Expected event names from the custom quirk:
+    - button_1_on_short_press
+    - button_1_off_short_press
+    - button_1_on_long_hold
+    - button_1_on_long_release
+    - button_1_off_long_hold
+    - button_1_off_long_release
+    - button_2_on_short_press
+    - button_2_off_short_press
+    - button_2_on_long_hold
+    - button_2_on_long_release
+    - button_2_off_long_hold
+    - button_2_off_long_release
+    - button_3_on_short_press
+    - button_3_off_short_press
+    - button_3_on_long_hold
+    - button_3_on_long_release
+    - button_3_off_long_hold
+    - button_3_off_long_release
+
   domain: automation
   input:
-    remote:
+    remote_device:
       name: Namron wall switch
+      description: Select the Namron wall switch device from ZHA
       selector:
         device:
           integration: zha
@@ -129,18 +161,16 @@ trigger:
   - platform: event
     event_type: zha_event
 
+variables:
+  remote_device: !input remote_device
+  trigger_device_id: "{{ trigger.event.data.device_id | default('') }}"
+  command: "{{ trigger.event.data.command | default('') }}"
+
 condition:
   - condition: template
-    value_template: >
-      {{ trigger.event.data is defined and
-         trigger.event.data.device_id is defined and
-         trigger.event.data.command is defined and
-         trigger.event.data.device_id == !input remote }}
+    value_template: "{{ trigger_device_id == remote_device }}"
 
 action:
-  - variables:
-      command: "{{ trigger.event.data.command }}"
-
   - choose:
       - conditions:
           - condition: template
