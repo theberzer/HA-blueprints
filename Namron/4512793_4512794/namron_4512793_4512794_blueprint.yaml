@@ -1,0 +1,233 @@
+blueprint:
+  name: ZHA - Namron 4512793 / 4512794 Multi-Channel Wall Switch
+  description: >
+    Event-based blueprint for the Namron 4512793 / 4512794 wall switch using
+    a custom ZHA quirk that emits zha_event commands such as
+    button_1_on_short_press, button_2_off_long_hold, etc.
+
+    Supports 1-, 2-, and 3-channel modes through the same event model.
+  domain: automation
+  input:
+    remote:
+      name: Namron wall switch
+      selector:
+        device:
+          integration: zha
+
+    button_1_on_short_press:
+      name: Button 1 ON - short press
+      default: []
+      selector:
+        action: {}
+
+    button_1_off_short_press:
+      name: Button 1 OFF - short press
+      default: []
+      selector:
+        action: {}
+
+    button_1_on_long_hold:
+      name: Button 1 ON - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_1_on_long_release:
+      name: Button 1 ON - long release
+      default: []
+      selector:
+        action: {}
+
+    button_1_off_long_hold:
+      name: Button 1 OFF - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_1_off_long_release:
+      name: Button 1 OFF - long release
+      default: []
+      selector:
+        action: {}
+
+    button_2_on_short_press:
+      name: Button 2 ON - short press
+      default: []
+      selector:
+        action: {}
+
+    button_2_off_short_press:
+      name: Button 2 OFF - short press
+      default: []
+      selector:
+        action: {}
+
+    button_2_on_long_hold:
+      name: Button 2 ON - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_2_on_long_release:
+      name: Button 2 ON - long release
+      default: []
+      selector:
+        action: {}
+
+    button_2_off_long_hold:
+      name: Button 2 OFF - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_2_off_long_release:
+      name: Button 2 OFF - long release
+      default: []
+      selector:
+        action: {}
+
+    button_3_on_short_press:
+      name: Button 3 ON - short press
+      default: []
+      selector:
+        action: {}
+
+    button_3_off_short_press:
+      name: Button 3 OFF - short press
+      default: []
+      selector:
+        action: {}
+
+    button_3_on_long_hold:
+      name: Button 3 ON - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_3_on_long_release:
+      name: Button 3 ON - long release
+      default: []
+      selector:
+        action: {}
+
+    button_3_off_long_hold:
+      name: Button 3 OFF - long hold
+      default: []
+      selector:
+        action: {}
+
+    button_3_off_long_release:
+      name: Button 3 OFF - long release
+      default: []
+      selector:
+        action: {}
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zha_event
+
+condition:
+  - condition: template
+    value_template: >
+      {{ trigger.event.data is defined and
+         trigger.event.data.device_id is defined and
+         trigger.event.data.command is defined and
+         trigger.event.data.device_id == !input remote }}
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"
+
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_on_short_press' }}"
+        sequence: !input button_1_on_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_off_short_press' }}"
+        sequence: !input button_1_off_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_on_long_hold' }}"
+        sequence: !input button_1_on_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_on_long_release' }}"
+        sequence: !input button_1_on_long_release
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_off_long_hold' }}"
+        sequence: !input button_1_off_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_1_off_long_release' }}"
+        sequence: !input button_1_off_long_release
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_on_short_press' }}"
+        sequence: !input button_2_on_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_off_short_press' }}"
+        sequence: !input button_2_off_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_on_long_hold' }}"
+        sequence: !input button_2_on_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_on_long_release' }}"
+        sequence: !input button_2_on_long_release
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_off_long_hold' }}"
+        sequence: !input button_2_off_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_2_off_long_release' }}"
+        sequence: !input button_2_off_long_release
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_on_short_press' }}"
+        sequence: !input button_3_on_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_off_short_press' }}"
+        sequence: !input button_3_off_short_press
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_on_long_hold' }}"
+        sequence: !input button_3_on_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_on_long_release' }}"
+        sequence: !input button_3_on_long_release
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_off_long_hold' }}"
+        sequence: !input button_3_off_long_hold
+
+      - conditions:
+          - condition: template
+            value_template: "{{ command == 'button_3_off_long_release' }}"
+        sequence: !input button_3_off_long_release
