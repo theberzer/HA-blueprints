@@ -79,7 +79,7 @@ The included **automation blueprint** makes it easy to use these triggers to con
 - Registers all buttons and actions of the Namron 4512793 / 4512794 as ZHA device automations.
 - Triggers are exposed with clear names:
   - `short_press` / `long_hold` / `long_release`
-  - `channel_1_on`, `channel_1_off`, ... up to `channel_4_on`, `channel_4_off`
+  - `channel_1_on`, `channel_1_off`, ... up to `channel_3_on`, `channel_3_off`
 
 **What the blueprint does:**
 
@@ -94,7 +94,6 @@ The included **automation blueprint** makes it easy to use these triggers to con
 - If triggers do not appear, ensure:
   - The quirk file is correctly installed and Home Assistant has been restarted.
   - The device has been re-paired after the quirk was added.
-  - The blueprint matches the trigger format (`short_press`, `button_1_on`, etc).
 - If you still see only "Identify" or missing buttons, check that you have no conflicting quirks and that ZHA is using the custom quirk.
 
 ---
