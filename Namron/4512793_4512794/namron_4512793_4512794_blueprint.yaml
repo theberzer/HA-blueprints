@@ -1,10 +1,12 @@
 blueprint:
-  name: ZHA - Namron Multi-Channel Zigbee Switch 4512793 / 4512794
-  author: theberzer
+  name: ZHA - Namron 4512793 / 4512794 Multi-Channel Wall Switch
   description: >
-    Control lights and more with Namron Zigbee multi-channel wall switch using ZHA.
-    Supports short press, long hold and long release for ON and OFF buttons.
-    Inputs are visually grouped by button.
+    Blueprint for the Namron 4512793 / 4512794 Zigbee wall switch used with ZHA
+    and a custom quirk that emits zha_event commands.
+
+    Supports 1, 2 and 3 physical buttons. Each button has ON and OFF sides:
+    short press, long hold and long release.
+
   domain: automation
   homeassistant:
     min_version: 2024.6.0
@@ -15,8 +17,8 @@ blueprint:
       icon: mdi:remote
       input:
         remote_device:
-          name: Namron Zigbee switch
-          description: Select the Namron Zigbee wall switch.
+          name: Namron wall switch
+          description: Select the Namron wall switch device from ZHA.
           selector:
             device:
               integration: zha
@@ -126,488 +128,110 @@ blueprint:
           selector:
             action: {}
 
-    button_4:
-      name: Button 4 / Channel 4
-      icon: mdi:numeric-4-box
-      collapsed: true
-      input:
-        button_4_on_short_press:
-          name: ON - short press
-          default: []
-          selector:
-            action: {}
-        button_4_off_short_press:
-          name: OFF - short press
-          default: []
-          selector:
-            action: {}
-        button_4_on_long_hold:
-          name: ON - long hold
-          default: []
-          selector:
-            action: {}
-        button_4_on_long_release:
-          name: ON - long release
-          default: []
-          selector:
-            action: {}
-        button_4_off_long_hold:
-          name: OFF - long hold
-          default: []
-          selector:
-            action: {}
-        button_4_off_long_release:
-          name: OFF - long release
-          default: []
-          selector:
-            action: {}
-
-    button_5:
-      name: Button 5 / Channel 5
-      icon: mdi:numeric-5-box
-      collapsed: true
-      input:
-        button_5_on_short_press:
-          name: ON - short press
-          default: []
-          selector:
-            action: {}
-        button_5_off_short_press:
-          name: OFF - short press
-          default: []
-          selector:
-            action: {}
-        button_5_on_long_hold:
-          name: ON - long hold
-          default: []
-          selector:
-            action: {}
-        button_5_on_long_release:
-          name: ON - long release
-          default: []
-          selector:
-            action: {}
-        button_5_off_long_hold:
-          name: OFF - long hold
-          default: []
-          selector:
-            action: {}
-        button_5_off_long_release:
-          name: OFF - long release
-          default: []
-          selector:
-            action: {}
-
-    button_6:
-      name: Button 6 / Channel 6
-      icon: mdi:numeric-6-box
-      collapsed: true
-      input:
-        button_6_on_short_press:
-          name: ON - short press
-          default: []
-          selector:
-            action: {}
-        button_6_off_short_press:
-          name: OFF - short press
-          default: []
-          selector:
-            action: {}
-        button_6_on_long_hold:
-          name: ON - long hold
-          default: []
-          selector:
-            action: {}
-        button_6_on_long_release:
-          name: ON - long release
-          default: []
-          selector:
-            action: {}
-        button_6_off_long_hold:
-          name: OFF - long hold
-          default: []
-          selector:
-            action: {}
-        button_6_off_long_release:
-          name: OFF - long release
-          default: []
-          selector:
-            action: {}
-
 mode: restart
 max_exceeded: silent
 
 trigger:
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_1_on
-    id: button_1_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_1_off
-    id: button_1_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_1_on
-    id: button_1_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_1_on
-    id: button_1_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_1_off
-    id: button_1_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_1_off
-    id: button_1_off_long_release
+  - platform: event
+    event_type: zha_event
 
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_2_on
-    id: button_2_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_2_off
-    id: button_2_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_2_on
-    id: button_2_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_2_on
-    id: button_2_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_2_off
-    id: button_2_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_2_off
-    id: button_2_off_long_release
+variables:
+  remote_device: !input remote_device
+  trigger_device_id: "{{ trigger.event.data.device_id | default('') }}"
+  command: "{{ trigger.event.data.command | default('') }}"
 
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_3_on
-    id: button_3_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_3_off
-    id: button_3_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_3_on
-    id: button_3_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_3_on
-    id: button_3_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_3_off
-    id: button_3_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_3_off
-    id: button_3_off_long_release
-
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_4_on
-    id: button_4_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_4_off
-    id: button_4_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_4_on
-    id: button_4_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_4_on
-    id: button_4_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_4_off
-    id: button_4_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_4_off
-    id: button_4_off_long_release
-
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_5_on
-    id: button_5_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_5_off
-    id: button_5_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_5_on
-    id: button_5_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_5_on
-    id: button_5_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_5_off
-    id: button_5_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_5_off
-    id: button_5_off_long_release
-
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_6_on
-    id: button_6_on_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: short_press
-    subtype: button_6_off
-    id: button_6_off_short_press
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_6_on
-    id: button_6_on_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_6_on
-    id: button_6_on_long_release
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_hold
-    subtype: button_6_off
-    id: button_6_off_long_hold
-  - platform: device
-    device_id: !input remote_device
-    domain: zha
-    type: long_release
-    subtype: button_6_off
-    id: button_6_off_long_release
+condition:
+  - condition: template
+    value_template: "{{ trigger_device_id == remote_device }}"
 
 action:
   - choose:
       - conditions:
-          - condition: trigger
-            id: button_1_on_short_press
+          - condition: template
+            value_template: "{{ command == 'button_1_on_short_press' }}"
         sequence: !input button_1_on_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_1_off_short_press
+          - condition: template
+            value_template: "{{ command == 'button_1_off_short_press' }}"
         sequence: !input button_1_off_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_1_on_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_1_on_long_hold' }}"
         sequence: !input button_1_on_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_1_on_long_release
+          - condition: template
+            value_template: "{{ command == 'button_1_on_long_release' }}"
         sequence: !input button_1_on_long_release
+
       - conditions:
-          - condition: trigger
-            id: button_1_off_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_1_off_long_hold' }}"
         sequence: !input button_1_off_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_1_off_long_release
+          - condition: template
+            value_template: "{{ command == 'button_1_off_long_release' }}"
         sequence: !input button_1_off_long_release
 
       - conditions:
-          - condition: trigger
-            id: button_2_on_short_press
+          - condition: template
+            value_template: "{{ command == 'button_2_on_short_press' }}"
         sequence: !input button_2_on_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_2_off_short_press
+          - condition: template
+            value_template: "{{ command == 'button_2_off_short_press' }}"
         sequence: !input button_2_off_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_2_on_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_2_on_long_hold' }}"
         sequence: !input button_2_on_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_2_on_long_release
+          - condition: template
+            value_template: "{{ command == 'button_2_on_long_release' }}"
         sequence: !input button_2_on_long_release
+
       - conditions:
-          - condition: trigger
-            id: button_2_off_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_2_off_long_hold' }}"
         sequence: !input button_2_off_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_2_off_long_release
+          - condition: template
+            value_template: "{{ command == 'button_2_off_long_release' }}"
         sequence: !input button_2_off_long_release
 
       - conditions:
-          - condition: trigger
-            id: button_3_on_short_press
+          - condition: template
+            value_template: "{{ command == 'button_3_on_short_press' }}"
         sequence: !input button_3_on_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_3_off_short_press
+          - condition: template
+            value_template: "{{ command == 'button_3_off_short_press' }}"
         sequence: !input button_3_off_short_press
+
       - conditions:
-          - condition: trigger
-            id: button_3_on_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_3_on_long_hold' }}"
         sequence: !input button_3_on_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_3_on_long_release
+          - condition: template
+            value_template: "{{ command == 'button_3_on_long_release' }}"
         sequence: !input button_3_on_long_release
+
       - conditions:
-          - condition: trigger
-            id: button_3_off_long_hold
+          - condition: template
+            value_template: "{{ command == 'button_3_off_long_hold' }}"
         sequence: !input button_3_off_long_hold
+
       - conditions:
-          - condition: trigger
-            id: button_3_off_long_release
+          - condition: template
+            value_template: "{{ command == 'button_3_off_long_release' }}"
         sequence: !input button_3_off_long_release
-
-      - conditions:
-          - condition: trigger
-            id: button_4_on_short_press
-        sequence: !input button_4_on_short_press
-      - conditions:
-          - condition: trigger
-            id: button_4_off_short_press
-        sequence: !input button_4_off_short_press
-      - conditions:
-          - condition: trigger
-            id: button_4_on_long_hold
-        sequence: !input button_4_on_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_4_on_long_release
-        sequence: !input button_4_on_long_release
-      - conditions:
-          - condition: trigger
-            id: button_4_off_long_hold
-        sequence: !input button_4_off_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_4_off_long_release
-        sequence: !input button_4_off_long_release
-
-      - conditions:
-          - condition: trigger
-            id: button_5_on_short_press
-        sequence: !input button_5_on_short_press
-      - conditions:
-          - condition: trigger
-            id: button_5_off_short_press
-        sequence: !input button_5_off_short_press
-      - conditions:
-          - condition: trigger
-            id: button_5_on_long_hold
-        sequence: !input button_5_on_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_5_on_long_release
-        sequence: !input button_5_on_long_release
-      - conditions:
-          - condition: trigger
-            id: button_5_off_long_hold
-        sequence: !input button_5_off_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_5_off_long_release
-        sequence: !input button_5_off_long_release
-
-      - conditions:
-          - condition: trigger
-            id: button_6_on_short_press
-        sequence: !input button_6_on_short_press
-      - conditions:
-          - condition: trigger
-            id: button_6_off_short_press
-        sequence: !input button_6_off_short_press
-      - conditions:
-          - condition: trigger
-            id: button_6_on_long_hold
-        sequence: !input button_6_on_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_6_on_long_release
-        sequence: !input button_6_on_long_release
-      - conditions:
-          - condition: trigger
-            id: button_6_off_long_hold
-        sequence: !input button_6_off_long_hold
-      - conditions:
-          - condition: trigger
-            id: button_6_off_long_release
-        sequence: !input button_6_off_long_release
