@@ -242,222 +242,222 @@ trigger:
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_1_on
+    subtype: button_1_on
     id: button_1_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_1_off
+    subtype: button_1_off
     id: button_1_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_1_on
+    subtype: button_1_on
     id: button_1_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_1_on
+    subtype: button_1_on
     id: button_1_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_1_off
+    subtype: button_1_off
     id: button_1_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_1_off
+    subtype: button_1_off
     id: button_1_off_long_release
 
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_2_on
+    subtype: button_2_on
     id: button_2_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_2_off
+    subtype: button_2_off
     id: button_2_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_2_on
+    subtype: button_2_on
     id: button_2_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_2_on
+    subtype: button_2_on
     id: button_2_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_2_off
+    subtype: button_2_off
     id: button_2_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_2_off
+    subtype: button_2_off
     id: button_2_off_long_release
 
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_3_on
+    subtype: button_3_on
     id: button_3_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_3_off
+    subtype: button_3_off
     id: button_3_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_3_on
+    subtype: button_3_on
     id: button_3_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_3_on
+    subtype: button_3_on
     id: button_3_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_3_off
+    subtype: button_3_off
     id: button_3_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_3_off
+    subtype: button_3_off
     id: button_3_off_long_release
 
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_4_on
+    subtype: button_4_on
     id: button_4_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_4_off
+    subtype: button_4_off
     id: button_4_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_4_on
+    subtype: button_4_on
     id: button_4_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_4_on
+    subtype: button_4_on
     id: button_4_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_4_off
+    subtype: button_4_off
     id: button_4_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_4_off
+    subtype: button_4_off
     id: button_4_off_long_release
 
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_5_on
+    subtype: button_5_on
     id: button_5_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_5_off
+    subtype: button_5_off
     id: button_5_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_5_on
+    subtype: button_5_on
     id: button_5_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_5_on
+    subtype: button_5_on
     id: button_5_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_5_off
+    subtype: button_5_off
     id: button_5_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_5_off
+    subtype: button_5_off
     id: button_5_off_long_release
 
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_6_on
+    subtype: button_6_on
     id: button_6_on_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: short_press
-    subtype: channel_6_off
+    subtype: button_6_off
     id: button_6_off_short_press
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_6_on
+    subtype: button_6_on
     id: button_6_on_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_6_on
+    subtype: button_6_on
     id: button_6_on_long_release
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_hold
-    subtype: channel_6_off
+    subtype: button_6_off
     id: button_6_off_long_hold
   - platform: device
     device_id: !input remote_device
     domain: zha
     type: long_release
-    subtype: channel_6_off
+    subtype: button_6_off
     id: button_6_off_long_release
 
 action:
