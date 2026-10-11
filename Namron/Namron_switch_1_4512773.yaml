@@ -42,23 +42,19 @@ action:
       command: "{{ trigger.event.data.command }}"
       cluster_id: "{{ trigger.event.data.cluster_id }}"
       endpoint_id: "{{ trigger.event.data.endpoint_id }}"
-  - choose:
+      args: "{{ trigger.event.data.args | default([]) }}"
 
-#----------------------Channel One---------------------------------       
+  - choose:
       - conditions:
-          - "{{ command == 'on'}}"
-          - "{{ cluster_id == 6 }}"
-          - "{{ endpoint_id == 1 }}"
+          - "{{ command == 'on' }}"
+          - "{{ cluster_id | int == 6 }}"
+          - "{{ endpoint_id | int == 1 }}"
           - "{{ args == [] }}"
         sequence: !input channel_one_on_short
 
-
       - conditions:
           - "{{ command == 'off' }}"
-          - "{{ cluster_id == 6 }}"
-          - "{{ endpoint_id == 1 }}"
+          - "{{ cluster_id | int == 6 }}"
+          - "{{ endpoint_id | int == 1 }}"
           - "{{ args == [] }}"
         sequence: !input channel_one_off_short
-#
-#-------------------------------------------------------        
-    
